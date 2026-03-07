@@ -43,7 +43,7 @@ public class ProductionManager : MonoBehaviour
         smelterTimer += Time.deltaTime;
         if (smelterTimer >= Config.SmelterTimer)
         {
-            BigInteger totalCost = (BigInteger)(Config.SmelterCount * Config.MeltingCost);
+            BigInteger totalCost = (BigInteger)(Config.SmelterCount * Config.SmelterPower * Config.MeltingCost * (BigInteger)Config.GlobalMultiplier);
             if (Config.CopperCount >= totalCost)
             {
                 Config.CopperCount -= totalCost;

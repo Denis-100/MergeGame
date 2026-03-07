@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI[] exchangeMaxTopTexts;  // Цена макс в монетах (верх)
     public TextMeshProUGUI[] exchangeMaxBotTexts;  // Цена макс в рублях (низ)
 
+    [Header("Вкладка перерождение")]
+    public TextMeshProUGUI textInfoPrestige;        // Информация о престиже
+    public TextMeshProUGUI textPricePrestige;      // Цена престижа
+
     [Space]
     public ProductionManager prodManager;
 
@@ -55,8 +59,20 @@ public class UIManager : MonoBehaviour
 
         HandleClickPowerUpdates();
         UpdateExchangeUI();
+        UpdatePresigeUI();
+        UpdateStaticTexts();
     }
 
+    void UpdatePresigeUI()
+    {
+        textInfoPrestige.text = $"Перерождений: {Formatter.FormatValue(Config.prestigeCount)} | " +
+            $"Очков ПР: {Formatter.FormatValue(Config.prestigePoints)}\n" +
+            $"Глобальный множитель: {Config.GlobalMultiplier}";
+
+        textPricePrestige.text = $"Цена: {Formatter.FormatValue(Config.presigePrice)}";
+    }
+
+    // Интерфейс кнопок обмена монет
     void UpdateExchangeUI()
     {
         float interval = prodManager != null ? prodManager.coinIncomeInterval : 1.0f;
@@ -169,8 +185,8 @@ public class UIManager : MonoBehaviour
     private void UpdateStaticTexts()
     {
         tempPowerCopper = Config.ClickCopperPower; tempPowerCoin = Config.ClickCoinPower; tempPowerRub = Config.ClickRubPower;
-        copperButtonText.text = $"+{Formatter.FormatValue(Config.ClickCopperPower)} Медь";
-        smelterButtonText.text = $"+{Formatter.FormatValue(Config.ClickCoinPower)} Монет";
-        coinButtonText.text = $"+{Formatter.FormatValue(Config.ClickRubPower)} Рублей";
+        copperButtonText.text = $"+{Formatter.FormatValue(Config.ClickCopperPower * Config.GlobalMultiplier)} Медь";
+        smelterButtonText.text = $"+{Formatter.FormatValue(Config.ClickCoinPower * Config.GlobalMultiplier)} Монет";
+        coinButtonText.text = $"+{Formatter.FormatValue(Config.ClickRubPower * Config.GlobalMultiplier)} Рублей";
     }
 }

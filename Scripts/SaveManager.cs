@@ -42,7 +42,10 @@ public static class SaveManager
     private const string LvlClickRubKey = "LvlClickRub";
 
     // --- КЛЮЧИ ПЕРЕРОЖДЕНИЯ ---
-    private const string PrestigePointsKey = "PrestigePoints";
+    private const string PrestigePriceKey = "PrestigePrice";
+    private const string PrestigeCountKey = "PrestigeCount";
+    private const string PrestigeAddPointsKey = "PrestigeAddPoints";
+    private const string PrestigePointsKey = "prestigePoints";
     private const string GlobalMultiplierKey = "GlobalMultiplier";
 
     // --- КЛЮЧИ МОНЕТ ---
@@ -106,8 +109,11 @@ public static class SaveManager
         PlayerPrefs.SetInt(LvlClickRubKey, Config.lvlClickRub);
 
         // Перерождение
-        SetBigInt(PrestigePointsKey, Config.PrestigePoints);
-        PlayerPrefs.SetFloat(GlobalMultiplierKey, Config.GlobalMultiplier);
+        SetBigInt(PrestigePriceKey, Config.presigePrice);
+        PlayerPrefs.SetInt(PrestigeCountKey, Config.prestigeCount);
+        SetBigInt(PrestigeAddPointsKey, Config.prestigeAddPoints);
+        SetBigInt(PrestigePointsKey, Config.prestigePoints);
+        PlayerPrefs.SetInt(GlobalMultiplierKey, Config.GlobalMultiplier);
 
         // Монеты
         SetBigInt(CoinOlovoCountKey, Config.coinOlovoCount);
@@ -135,10 +141,10 @@ public static class SaveManager
         // Шахты
         Config.MineCount = PlayerPrefs.GetInt(MineCountKey, 0);
         Config.MinePower = GetBigInt(MinePowerKey, 1);
-        Config.MineTimer = PlayerPrefs.GetFloat(MineTimerKey, 5.0f);
-        Config.MineBuyCost = GetBigInt(MineBuyCostKey, 50);
-        Config.MinePowerCost = GetBigInt(MinePowerCostKey, 100);
-        Config.MineSpeedCost = GetBigInt(MineSpeedCostKey, 200);
+        Config.MineTimer = PlayerPrefs.GetFloat(MineTimerKey, 7.0f);
+        Config.MineBuyCost = GetBigInt(MineBuyCostKey, 150);
+        Config.MinePowerCost = GetBigInt(MinePowerCostKey, 200);
+        Config.MineSpeedCost = GetBigInt(MineSpeedCostKey, 300);
 
         // Плавильни
         Config.SmelterCount = PlayerPrefs.GetInt(SmelterCountKey, 0);
@@ -162,8 +168,11 @@ public static class SaveManager
         Config.lvlClickRub = PlayerPrefs.GetInt(LvlClickRubKey, 1);
 
         // Перерождение
-        Config.PrestigePoints = GetBigInt(PrestigePointsKey, 0);
-        Config.GlobalMultiplier = PlayerPrefs.GetFloat(GlobalMultiplierKey, 1.0f);
+        Config.presigePrice = GetBigInt(PrestigePriceKey, 100000000);
+        Config.prestigeCount = PlayerPrefs.GetInt(PrestigeCountKey, 0);
+        Config.prestigeAddPoints = GetBigInt(PrestigeAddPointsKey, 1);
+        Config.prestigePoints = GetBigInt(PrestigePointsKey, 0);
+        Config.GlobalMultiplier = PlayerPrefs.GetInt(GlobalMultiplierKey, 1);
 
         // Монеты
         Config.coinOlovoCount = GetBigInt(CoinOlovoCountKey, 0);

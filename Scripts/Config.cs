@@ -1,5 +1,6 @@
 using UnityEditor;
 using System.Numerics;
+using Unity.Burst.CompilerServices;
 
 public static class Config
 {
@@ -14,18 +15,18 @@ public static class Config
     public static int MineCount = 0;               // Купленных шахт
     public static BigInteger MinePower = 3;        // Сколько руды дает за цикл
     public const int MineAddPower = 3;             // Сколько силы прибавляется за лвл ап
-    public static float MineTimer = 5.0f;          // За сколько добывает
+    public static float MineTimer = 7.0f;          // За сколько добывает
     public const float MineMinTimer = 0.1f;        // Лимит скорости
 
     // Цены шахт
-    public static BigInteger MineBuyCost = 50;     // Цена шахты
-    public static BigInteger MinePowerCost = 100;  // Цена улучшения сколько добывает за цикл
-    public static BigInteger MineSpeedCost = 200;  // Цена улучшения скорости
+    public static BigInteger MineBuyCost = 150;     // Цена шахты
+    public static BigInteger MinePowerCost = 300;  // Цена улучшения сколько добывает за цикл
+    public static BigInteger MineSpeedCost = 500;  // Цена улучшения скорости
 
     // Множитель улучшений шахт
     public static float MultiMineBuy = 1.2f;       // Рост цены покупки
     public static float MultiMinePower = 1.2f;     // Рост цены силы
-    public static float MultiMineSpeed = 1.2f;     // Рост цены скорости
+    public static float MultiMineSpeed = 1.4f;     // Рост цены скорости
 
 
     // ----- Плавильни -----
@@ -44,35 +45,38 @@ public static class Config
     //Множитель улучшений плавилен
     public static float MultiSmelterBuy = 1.2f;    // Рост цены покупки
     public static float MultiSmelterPower = 1.2f;  // Рост цены силы
-    public static float MultiSmelterSpeed = 1.2f;  // Рост цены скорости
+    public static float MultiSmelterSpeed = 1.4f;  // Рост цены скорости
 
     // Клик
     public static int lvlClickCopper = 1;             // Ур улучшения клика руды
     public static BigInteger ClickCopperPower = 1;    // Сила клика руды
     public static BigInteger CostClickCopper = 20;    // Цена апа клика руды
     public static float MultiClickCopper = 1.2f;      // Множитель цены клика руды
-    public static float MultiClickCopperPower = 1.5f; // Множитель силы клика руды
-    public const float growthRateCopper = 1.1f;      // Множитель прибавки к силе клике за ур
+    public static float MultiClickCopperPower = 1.4f; // Множитель силы клика руды
+    public const float growthRateCopper = 1.09f;      // Множитель прибавки к силе клике за ур
 
     public static int lvlClickCoin = 1;               // Ур улучшения клика переплавки
     public static BigInteger ClickCoinPower = 1;      // Сила клика монет (сколько плавим за раз)
     public static BigInteger CostClickCoin = 20;      // Цена апа клика монет
     public static float MultiClickCoin = 1.2f;        // Множитель цены клика монет
-    public static float MultiClickCoinPower = 1.2f;   // Множитель силы клика монет
+    public static float MultiClickCoinPower = 1.1f;   // Множитель силы клика монет
     public const float growthRateCoin = 1.08f;        // Множитель прибавки к силе клике за ур
 
     public static int lvlClickRub = 1;                // Ур улучшения клика рублей
     public static BigInteger ClickRubPower = 1;       // Сила клика рублей
     public static BigInteger CostClickRub = 20;       // Цена апа клика рублей
     public static float MultiClickRub = 1.2f;         // Множитель цены клика рублей 
-    public static float MultiClickRubPower = 1.3f;    // Множитель силы клика рублей 
-    public const float growthRateRub = 1.1f;         // Множитель прибавки к силе клике за ур
+    public static float MultiClickRubPower = 1.2f;    // Множитель силы клика рублей 
+    public const float growthRateRub = 1.09f;         // Множитель прибавки к силе клике за ур
 
     // Перерождение
-    public static int PrestigeCount = 0;              // Количество перерождение
-    public static BigInteger PrestigePoints = 0;      // Количество очков перерождений
-    public static float PrestigeAddMulti = 0.5f;      // Бонус от перерождения к множителю      
-    public static float GlobalMultiplier = 1.0f;      // Множитель от перерождений
+    public static BigInteger presigePrice = 100_000_000;     // Цена 1-го престижа
+    public const int prestigeMultiPrice = 100;        // Множитель цены престижа
+    public static int prestigeCount = 0;              // Количество перерождение
+    public static BigInteger prestigePoints = 0;      // Количество очков перерождений
+    public static BigInteger prestigeAddPoints = 1;      // Количество очков перерождений
+    public static int prestigeAddMulti = 1;      // Бонус от перерождения к множителю      
+    public static int GlobalMultiplier = 1;      // Множитель от перерождений
 
     // ----- Монеты -----
     // Количество
@@ -119,12 +123,12 @@ public static class Config
         // ----- Шахты -----
         MineCount = 0;        // Купленных шахт
         MinePower = 3;        // Сколько руды дает за цикл
-        MineTimer = 5.0f;     // За сколько добывает
+        MineTimer = 7.0f;     // За сколько добывает
 
         // Цены шахт
-        MineBuyCost = 50;     // Цена шахты
-        MinePowerCost = 100;  // Цена улучшения сколько добывает за цикл
-        MineSpeedCost = 200;  // Цена улучшения скорости
+        MineBuyCost = 150;     // Цена шахты
+        MinePowerCost = 300;  // Цена улучшения сколько добывает за цикл
+        MineSpeedCost = 500;  // Цена улучшения скорости
 
         // Множитель улучшений шахт
         MultiMineBuy = 1.2f;     // Рост цены покупки
@@ -166,9 +170,10 @@ public static class Config
         MultiClickRubPower = 1.3f; // Множитель силы клика рублей 
 
         // Перерождение
-        PrestigeCount = 0;         // Количество перерождение
-        PrestigePoints = 0;        // Количество очков перерождений
-        GlobalMultiplier = 1.0f;   // Множитель от перерождений
+        presigePrice = 100_000_000;     // Цена 1-го престижа
+        prestigeCount = 0;         // Количество перерождение
+        prestigePoints = 0;        // Количество очков перерождений
+        GlobalMultiplier = 1;   // Множитель от перерождений
 
         // ----- Монеты -----
         coinOlovoCount = 0;     // Олово

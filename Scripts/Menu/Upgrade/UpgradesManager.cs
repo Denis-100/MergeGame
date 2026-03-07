@@ -105,8 +105,8 @@ public class UpgradesManager : MonoBehaviour
         if (clickRubText) clickRubText.text = $"LVL: {Config.lvlClickRub} | Рублей за клик: {Formatter.FormatValue(Config.ClickRubPower)}";
 
         // Информация о доходах
-        if (infoText) infoText.text = $"Шахты: +{Formatter.FormatValue(Config.MineCount * Config.MinePower)} меди | " +
-                                      $"Печи: +{Formatter.FormatValue(Config.SmelterCount * Config.SmelterPower)} монеты";
+        if (infoText) infoText.text = $"Шахты: +{Formatter.FormatValue(Config.MineCount * Config.MinePower * Config.GlobalMultiplier)} меди | " +
+                                      $"Печи: +{Formatter.FormatValue(Config.SmelterCount * Config.SmelterPower * Config.GlobalMultiplier)} монеты";
     }
 
     // --- ЛОГИКА ШАХТ ---

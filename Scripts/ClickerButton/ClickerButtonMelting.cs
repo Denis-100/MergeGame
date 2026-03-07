@@ -24,21 +24,21 @@ public class ClickerButtonMelting : MonoBehaviour
         else strike = 0;
         lastClickPosition = currentClickPos;
 
-        BigInteger totalCost = Config.MeltingCost * Config.ClickCoinPower;
+        BigInteger totalCost = Config.MeltingCost * Config.ClickCoinPower * Config.GlobalMultiplier;
 
         if (Config.CopperCount >= totalCost)
         {
-            Config.CopperCoinCount += Config.ClickCoinPower;
+            Config.CopperCoinCount += Config.ClickCoinPower * Config.GlobalMultiplier;
             Config.CopperCount -= totalCost;
 
             SaveManager.SaveGame();
         }
         
-        else if (Config.CopperCount >= Config.MeltingCost)
+        else if (Config.CopperCount >= Config.MeltingCost * Config.GlobalMultiplier)
         {
-            BigInteger possibleAmount = Config.CopperCount / Config.MeltingCost;
+            BigInteger possibleAmount = Config.CopperCount / Config.MeltingCost * Config.GlobalMultiplier;
             Config.CopperCoinCount += possibleAmount;
-            Config.CopperCount -= possibleAmount * Config.MeltingCost;
+            Config.CopperCount -= possibleAmount * Config.MeltingCost * Config.GlobalMultiplier;
 
             SaveManager.SaveGame();
         }

@@ -6,7 +6,6 @@ public class ClickerButtonCoin : MonoBehaviour
     private Vector2 lastClickPosition;
     private int strike = 0;
     private const int MAX_STRIKE = 7;
-
     public void ClickCoin()
     {
         Vector2 currentClickPos = Pointer.current.position.ReadValue();
@@ -23,7 +22,7 @@ public class ClickerButtonCoin : MonoBehaviour
         else strike = 0;
         lastClickPosition = currentClickPos;
 
-        Config.RubCount += Config.ClickRubPower;
+        Config.RubCount += Config.ClickRubPower * Config.GlobalMultiplier;
         SaveManager.SaveGame();
     }
 }
