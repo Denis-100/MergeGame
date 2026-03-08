@@ -1512,7 +1512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0418\u043D\u0444\u0430"
+  m_text: "\u041A\u0443\u043F\u0438\u0442\u044C \u043F\u0435\u0440\u0435\u0440\u043E\u0436\u0434\u0435\u043D\u0438\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
   m_sharedMaterial: {fileID: -4761420781867369489, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
@@ -1800,7 +1800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C +1"
+  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C +1 \u041B\u0412\u041B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
   m_sharedMaterial: {fileID: -4761420781867369489, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
@@ -2895,26 +2895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0d76a44a971a24784bc6b2af16c50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradesManager
-  mineSlider: {fileID: 1867131857}
-  smelterSlider: {fileID: 930594935}
-  infoText: {fileID: 405166909}
-  mineInfoText: {fileID: 1527748657}
-  mineBuyCostText: {fileID: 1988056219}
-  minePowerCostText: {fileID: 1169443898}
-  mineSpeedCostText: {fileID: 1749139768}
-  smelterInfoText: {fileID: 946206734}
-  smelterBuyCostText: {fileID: 1232443162}
-  smelterPowerCostText: {fileID: 1373354801}
-  smelterSpeedCostText: {fileID: 1658625655}
-  clickCopperBuyCountText: {fileID: 1130645226}
-  clickCoinBuyCountText: {fileID: 902446852}
-  clickRubBuyCountText: {fileID: 157417102}
-  clickCopperCostText: {fileID: 1491452030}
-  clickCoinCostText: {fileID: 504785733}
-  clickRubCostText: {fileID: 15639794}
-  clickCopperText: {fileID: 266931669}
-  clickCoinText: {fileID: 369079357}
-  clickRubText: {fileID: 1305509323}
 --- !u!1 &194055290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3629,7 +3609,7 @@ GameObject:
   - component: {fileID: 217175318}
   - component: {fileID: 217175317}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text Info Icome Exchange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5444,7 +5424,7 @@ GameObject:
   - component: {fileID: 301644627}
   - component: {fileID: 301644626}
   m_Layer: 5
-  m_Name: InfoCard
+  m_Name: Info Olovo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6725,8 +6705,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 452646057}
   m_HandleRect: {fileID: 452646056}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.3834543
+  m_Value: 0.9999999
+  m_Size: 0.38345426
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6963,7 +6943,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C 1"
+  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
   m_sharedMaterial: {fileID: -4761420781867369489, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
@@ -7371,7 +7351,7 @@ GameObject:
   - component: {fileID: 405166910}
   - component: {fileID: 405166909}
   m_Layer: 5
-  m_Name: Text Statistic
+  m_Name: Text Info Income
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10066,7 +10046,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 3479208581180039624, guid: ef4960ebdf94b0843a8469aa2cca374c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13788,7 +13768,7 @@ GameObject:
   - component: {fileID: 805899499}
   - component: {fileID: 805899498}
   m_Layer: 5
-  m_Name: Text Price
+  m_Name: Text Price Olovo Max
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14304,7 +14284,7 @@ GameObject:
   - component: {fileID: 865616126}
   - component: {fileID: 865616125}
   m_Layer: 5
-  m_Name: Text Info
+  m_Name: Text Info Olovo 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14748,7 +14728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C +1"
+  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C +1 \u041B\u0412\u041B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
   m_sharedMaterial: {fileID: -4761420781867369489, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
@@ -15237,7 +15217,7 @@ GameObject:
   - component: {fileID: 930594934}
   - component: {fileID: 930594935}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Smelter Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17400,7 +17380,7 @@ GameObject:
   - component: {fileID: 1117291509}
   - component: {fileID: 1117291508}
   m_Layer: 5
-  m_Name: Text Price
+  m_Name: Text Price Olovo 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17537,7 +17517,7 @@ GameObject:
   - component: {fileID: 1121300638}
   - component: {fileID: 1121300637}
   m_Layer: 5
-  m_Name: Text Info
+  m_Name: Text Info Olovo Max
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17864,7 +17844,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C +1"
+  m_text: "\u041A\u0423\u041F\u0418\u0422\u042C +1 \u041B\u0412\u041B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
   m_sharedMaterial: {fileID: -4761420781867369489, guid: 14911425f15662b41bc79a4a6a740e8a, type: 2}
@@ -24414,9 +24394,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 743800260}
-  - {fileID: 514307120}
   - {fileID: 425773916}
   - {fileID: 217175316}
+  - {fileID: 514307120}
   m_Father: {fileID: 1826207393}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -25763,10 +25743,27 @@ MonoBehaviour:
   copperText: {fileID: 305741685}
   copperCoinText: {fileID: 576701883}
   coinText: {fileID: 1409248877}
+  mineSlider: {fileID: 1867131857}
+  smelterSlider: {fileID: 930594935}
+  infoText: {fileID: 405166909}
   exchangeHeaderDeltaText: {fileID: 217175317}
   copperButtonText: {fileID: 986985376}
   smelterButtonText: {fileID: 1372678728}
   coinButtonText: {fileID: 380982906}
+  mineInfoText: {fileID: 1527748657}
+  mineBuyCostText: {fileID: 1988056219}
+  minePowerCostText: {fileID: 1169443898}
+  mineSpeedCostText: {fileID: 1749139768}
+  smelterInfoText: {fileID: 946206734}
+  smelterBuyCostText: {fileID: 1232443162}
+  smelterPowerCostText: {fileID: 1373354801}
+  smelterSpeedCostText: {fileID: 1658625655}
+  clickCopperLvlText: {fileID: 266931669}
+  clickCopperCostText: {fileID: 1491452030}
+  clickCoinLvlText: {fileID: 369079357}
+  clickCoinCostText: {fileID: 504785733}
+  clickRubLvlText: {fileID: 1305509323}
+  clickRubCostText: {fileID: 15639794}
   coinCountTexts:
   - {fileID: 301644626}
   - {fileID: 1153957874}
@@ -25778,17 +25775,6 @@ MonoBehaviour:
   - {fileID: 1295409459}
   - {fileID: 257550038}
   - {fileID: 411509928}
-  coinIncomeDeltaTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   exchangeOneTopTexts:
   - {fileID: 865616125}
   - {fileID: 470446690}
@@ -29205,7 +29191,7 @@ GameObject:
   - component: {fileID: 1867131856}
   - component: {fileID: 1867131857}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Mine Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

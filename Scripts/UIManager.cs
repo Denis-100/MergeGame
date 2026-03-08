@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
         Application.targetFrameRate = 120;
     }
 
-    private void Start() => UpdateStaticTexts();
+    private void Start() => UpdateButtonPowerText();
 
     void Update()
     {
@@ -87,6 +87,7 @@ public class UIManager : MonoBehaviour
         UpdateUpgradesUI();
         UpdateExchangeUI();
         UpdatePresigeUI();
+        UpdateButtonPowerText();
         HandleClickPowerUpdates();
     }
 
@@ -105,13 +106,13 @@ public class UIManager : MonoBehaviour
         if (smelterSpeedCostText) smelterSpeedCostText.text = Config.SmelterTimer <= Config.SmelterMinTimer ? "МАКС." : $"{Formatter.FormatValue(Config.SmelterSpeedCost)} руб.";
 
         // Улучшения кликов
-        if (clickCopperLvlText) clickCopperLvlText.text = $"LVL: {Config.lvlClickCopper} | Сила: {Formatter.FormatValue(Config.ClickCopperPower)}";
+        if (clickCopperLvlText) clickCopperLvlText.text = $"Медь LVL: {Config.lvlClickCopper} | Сила: {Formatter.FormatValue(Config.ClickCopperPower)}";
         if (clickCopperCostText) clickCopperCostText.text = $"{Formatter.FormatValue(Config.CostClickCopper)} руб.";
 
-        if (clickCoinLvlText) clickCoinLvlText.text = $"LVL: {Config.lvlClickCoin} | Сила: {Formatter.FormatValue(Config.ClickCoinPower)}";
+        if (clickCoinLvlText) clickCoinLvlText.text = $"Плавка Монет LVL: {Config.lvlClickCoin} | Сила: {Formatter.FormatValue(Config.ClickCoinPower)}";
         if (clickCoinCostText) clickCoinCostText.text = $"{Formatter.FormatValue(Config.CostClickCoin)} руб.";
 
-        if (clickRubLvlText) clickRubLvlText.text = $"LVL: {Config.lvlClickRub} | Сила: {Formatter.FormatValue(Config.ClickRubPower)}";
+        if (clickRubLvlText) clickRubLvlText.text = $"Рубли LVL: {Config.lvlClickRub} | Сила: {Formatter.FormatValue(Config.ClickRubPower)}";
         if (clickRubCostText) clickRubCostText.text = $"{Formatter.FormatValue(Config.CostClickRub)} руб.";
 
         if (infoText)
@@ -159,7 +160,7 @@ public class UIManager : MonoBehaviour
     void UpdatePresigeUI()
     {
         if (textInfoPrestige) textInfoPrestige.text = $"Перерождений: {Formatter.FormatValue(Config.prestigeCount)} | Очков ПР: {Formatter.FormatValue(Config.prestigePoints)}\nГлобальный множитель: {Config.GlobalMultiplier}";
-        if (textPricePrestige) textPricePrestige.text = $"Цена: {Formatter.FormatValue(Config.presigePrice)}";
+        if (textPricePrestige) textPricePrestige.text = $"Цена: {Formatter.FormatValue(Config.prestigePrice)}";
     }
 
     private void HandleClickPowerUpdates()
@@ -169,7 +170,7 @@ public class UIManager : MonoBehaviour
         if (tempPowerRub != Config.ClickRubPower) { tempPowerRub = Config.ClickRubPower; coinButtonText.text = $"+{Formatter.FormatValue(Config.ClickRubPower * (BigInteger)Config.GlobalMultiplier)} Рублей"; }
     }
 
-    public void UpdateStaticTexts()
+    public void UpdateButtonPowerText()
     {
         tempPowerCopper = Config.ClickCopperPower; tempPowerCoin = Config.ClickCoinPower; tempPowerRub = Config.ClickRubPower;
         copperButtonText.text = $"+{Formatter.FormatValue(Config.ClickCopperPower * (BigInteger)Config.GlobalMultiplier)} Медь";

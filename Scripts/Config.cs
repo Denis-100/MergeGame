@@ -70,7 +70,7 @@ public static class Config
     public const float growthRateRub = 1.09f;         // Множитель прибавки к силе клике за ур
 
     // Перерождение
-    public static BigInteger presigePrice = 100_000_000;     // Цена 1-го престижа
+    public static BigInteger prestigePrice = 100_000_000;     // Цена 1-го престижа
     public const int prestigeMultiPrice = 100;        // Множитель цены престижа
     public static int prestigeCount = 0;              // Количество перерождение
     public static BigInteger prestigePoints = 0;      // Количество очков перерождений
@@ -170,7 +170,7 @@ public static class Config
         MultiClickRubPower = 1.3f; // Множитель силы клика рублей 
 
         // Перерождение
-        presigePrice = 100_000_000;     // Цена 1-го престижа
+        prestigePrice = 100_000_000;     // Цена 1-го престижа
         prestigeCount = 0;         // Количество перерождение
         prestigePoints = 0;        // Количество очков перерождений
         GlobalMultiplier = 1;   // Множитель от перерождений

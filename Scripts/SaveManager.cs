@@ -109,7 +109,7 @@ public static class SaveManager
         PlayerPrefs.SetInt(LvlClickRubKey, Config.lvlClickRub);
 
         // Перерождение
-        SetBigInt(PrestigePriceKey, Config.presigePrice);
+        SetBigInt(PrestigePriceKey, Config.prestigePrice);
         PlayerPrefs.SetInt(PrestigeCountKey, Config.prestigeCount);
         SetBigInt(PrestigeAddPointsKey, Config.prestigeAddPoints);
         SetBigInt(PrestigePointsKey, Config.prestigePoints);
@@ -168,7 +168,7 @@ public static class SaveManager
         Config.lvlClickRub = PlayerPrefs.GetInt(LvlClickRubKey, 1);
 
         // Перерождение
-        Config.presigePrice = GetBigInt(PrestigePriceKey, 100000000);
+        Config.prestigePrice = GetBigInt(PrestigePriceKey, 100000000);
         Config.prestigeCount = PlayerPrefs.GetInt(PrestigeCountKey, 0);
         Config.prestigeAddPoints = GetBigInt(PrestigeAddPointsKey, 1);
         Config.prestigePoints = GetBigInt(PrestigePointsKey, 0);
