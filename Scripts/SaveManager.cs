@@ -47,6 +47,15 @@ public static class SaveManager
     private const string PrestigeAddPointsKey = "PrestigeAddPoints";
     private const string PrestigePointsKey = "prestigePoints";
     private const string GlobalMultiplierKey = "GlobalMultiplier";
+    private const string PrestigeMultiPointsKey = "PrestigeMultiPoints";
+    private const string PrestigeMultiMineKey = "PrestigeMultiMine";
+    private const string PrestigeMultiSmelterKey = "PrestigeMultiSmelter";
+    private const string PrestigeMultiIncomeCoinKey = "PrestigeMultiIncomeCoin";
+    private const string prestigeMultiPointsPriceKey = "prestigeMultiPointsPrice";
+    private const string prestigeMultiMinePriceKey = "prestigeMultiMinePrice";
+    private const string prestigeMultiSmelterPriceKey = "prestigeMultiSmelterPrice";
+    private const string prestigeMultiCoinIncomePriceKey = "prestigeMultiCoinIncomePrice";
+
 
     // --- КЛЮЧИ МОНЕТ ---
     private const string CoinOlovoCountKey = "CoinOlovoCount";
@@ -60,13 +69,51 @@ public static class SaveManager
     private const string CoinRybinCountKey = "CoinRybinCount";
     private const string CoinSingularCountKey = "CoinSingularCount";
 
+    // Ключ для звука
+    private static string MasterVolumeKey = "MasterVolume";
+    private static string MasterMusicKey = "MasterMusicKey";
+
+    // Ключ для панели помощи
+    private static string IsFirstRunKey = "IsFirstRun";
+
     // Хелперы для BigInteger
     private static void SetBigInt(string key, BigInteger value) => PlayerPrefs.SetString(key, value.ToString());
+
+    //private static BigInteger GetBigInt(string key, BigInteger defaultValue)
+    //{
+    //    string saved = PlayerPrefs.GetString(key, "");
+    //    return string.IsNullOrEmpty(saved) ? defaultValue : BigInteger.Parse(saved);
+    //}
+
+    // Нужен только для переноса глобального множитнля из int в BigInteger
     private static BigInteger GetBigInt(string key, BigInteger defaultValue)
     {
-        string saved = PlayerPrefs.GetString(key, "");
-        return string.IsNullOrEmpty(saved) ? defaultValue : BigInteger.Parse(saved);
+        // 1. Проверяем, есть ли новое строковое значение (BigInt)
+        if (PlayerPrefs.HasKey(key))
+        {
+            string saved = PlayerPrefs.GetString(key, "");
+            if (!string.IsNullOrEmpty(saved))
+            {
+                return BigInteger.Parse(saved);
+            }
+        }
+
+        // 2. Если строки нет, ищем старое int значение
+        // Важно: мы не используем PlayerPrefs.HasKey здесь, так как HasKey 
+        // возвращает true для любого типа под этим ключом.
+        int legacyValue = PlayerPrefs.GetInt(key, -1);
+
+        if (legacyValue != -1)
+        {
+            BigInteger convertedValue = new BigInteger(legacyValue);
+            // Сразу конвертируем в новый формат, чтобы в следующий раз сработал пункт 1
+            SetBigInt(key, convertedValue);
+            return convertedValue;
+        }
+
+        return defaultValue;
     }
+
 
     // Сохранение
     public static void SaveGame()
@@ -113,8 +160,16 @@ public static class SaveManager
         PlayerPrefs.SetInt(PrestigeCountKey, Config.prestigeCount);
         SetBigInt(PrestigeAddPointsKey, Config.prestigeAddPoints);
         SetBigInt(PrestigePointsKey, Config.prestigePoints);
-        PlayerPrefs.SetInt(GlobalMultiplierKey, Config.GlobalMultiplier);
-
+        SetBigInt(GlobalMultiplierKey, Config.GlobalMultiplier);
+        SetBigInt(PrestigeMultiPointsKey, Config.prestigeMultiPoints);
+        SetBigInt(PrestigeMultiMineKey, Config.prestigeMultiMine);
+        SetBigInt(PrestigeMultiSmelterKey, Config.prestigeMultiSmelter);
+        SetBigInt(PrestigeMultiIncomeCoinKey, Config.prestigeMultiCoinIncome);
+        SetBigInt(prestigeMultiPointsPriceKey, Config.prestigeMultiPointsPrice);
+        SetBigInt(prestigeMultiMinePriceKey, Config.prestigeMultiMinePrice);
+        SetBigInt(prestigeMultiSmelterPriceKey, Config.prestigeMultiSmelterPrice);
+        SetBigInt(prestigeMultiCoinIncomePriceKey, Config.prestigeMultiCoinIncomePrice);
+        
         // Монеты
         SetBigInt(CoinOlovoCountKey, Config.coinOlovoCount);
         SetBigInt(CoinBronzaCountKey, Config.coinBronzaCount);
@@ -126,6 +181,13 @@ public static class SaveManager
         SetBigInt(CoinObsidianCountKey, Config.coinObsidianCount);
         SetBigInt(CoinRybinCountKey, Config.coinRybinCount);
         SetBigInt(CoinSingularCountKey, Config.coinSingularCount);
+
+        // Звук
+        PlayerPrefs.SetFloat(MasterVolumeKey, Config.MasterVolume);
+        PlayerPrefs.SetFloat(MasterMusicKey, Config.MusicVolume);
+
+        // Панель помощи
+        PlayerPrefs.SetInt(IsFirstRunKey, Config.IsFirstRun);
 
         PlayerPrefs.Save();
     }
@@ -172,7 +234,15 @@ public static class SaveManager
         Config.prestigeCount = PlayerPrefs.GetInt(PrestigeCountKey, 0);
         Config.prestigeAddPoints = GetBigInt(PrestigeAddPointsKey, 1);
         Config.prestigePoints = GetBigInt(PrestigePointsKey, 0);
-        Config.GlobalMultiplier = PlayerPrefs.GetInt(GlobalMultiplierKey, 1);
+        Config.GlobalMultiplier = GetBigInt(GlobalMultiplierKey, 1);
+        Config.prestigeMultiPoints = GetBigInt(PrestigeMultiPointsKey, 1);
+        Config.prestigeMultiMine = GetBigInt(PrestigeMultiMineKey, 1);
+        Config.prestigeMultiSmelter = GetBigInt(PrestigeMultiSmelterKey, 1);
+        Config.prestigeMultiCoinIncome = GetBigInt(PrestigeMultiIncomeCoinKey, 1);
+        Config.prestigeMultiPointsPrice = GetBigInt(prestigeMultiPointsPriceKey, 1);
+        Config.prestigeMultiMinePrice = GetBigInt(prestigeMultiMinePriceKey, 1);
+        Config.prestigeMultiSmelterPrice = GetBigInt(prestigeMultiSmelterPriceKey, 1);
+        Config.prestigeMultiCoinIncomePrice = GetBigInt(prestigeMultiCoinIncomePriceKey, 1);
 
         // Монеты
         Config.coinOlovoCount = GetBigInt(CoinOlovoCountKey, 0);
@@ -187,7 +257,11 @@ public static class SaveManager
         Config.coinSingularCount = GetBigInt(CoinSingularCountKey, 0);
 
         // Звук
-        Config.MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
+        Config.MasterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, 0.5f);
+        Config.MusicVolume = PlayerPrefs.GetFloat(MasterMusicKey, 0.2f);
+
+        // Панель помощи
+        Config.IsFirstRun = PlayerPrefs.GetInt(IsFirstRunKey, 0);
 
     }
 
@@ -209,5 +283,24 @@ public static class SaveManager
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Debug.Log("Прогресс сброшен");
+    }
+
+    // Сброс
+    public static void PrestigeResetGame()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        Config.ResetData();
+
+        SaveGame();
+
+        ProductionManager prod = Object.FindFirstObjectByType<ProductionManager>();
+        if (prod != null)
+        {
+            prod.mineTimer = 0;
+            prod.smelterTimer = 0;
+        }
+;
+        Debug.Log("Сделано перерождение. Прогресс сброшен");
     }
 }

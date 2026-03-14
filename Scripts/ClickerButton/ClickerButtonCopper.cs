@@ -23,7 +23,7 @@ public class ClickerButtonCopper : MonoBehaviour
         else strike = 0;
         lastClickPosition = currentClickPos;
 
-        Config.CopperCount += Config.ClickCopperPower * Config.GlobalMultiplier;
+        Config.CopperCount += GameFormulas.GetTotalClickCopper();
         SaveManager.SaveGame();
     }
 

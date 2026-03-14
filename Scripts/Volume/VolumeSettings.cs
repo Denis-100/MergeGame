@@ -8,11 +8,21 @@ public class VolumeSettings : MonoBehaviour
     public Slider volumeSlider;       
     public TextMeshProUGUI volumeText;
 
+    [Header("Элементы UI (Музыка)")]
+    public Slider musicSlider;
+    public TextMeshProUGUI musicText;
+
     [Header("Для звука")]
     public SoundManager soundManager;
     public AudioClip previewClip;
+    public AudioSource musicSource;
 
     private void Start()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
     {
         // При старте устанавливаем значение ползунка из сохраненного конфига
         if (volumeSlider != null)
@@ -25,7 +35,24 @@ public class VolumeSettings : MonoBehaviour
             volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         }
 
+        if (musicSlider != null)
+        {
+            musicSlider.minValue = 0f;
+            musicSlider.maxValue = 1f;
+            musicSlider.value = Config.MusicVolume;
+            musicSlider.onValueChanged.AddListener(OnMusicChanged);
+        }
+
         UpdateVolumeText(Config.MasterVolume);
+        UpdateMusicText(Config.MusicVolume);
+
+        // Запускаем музыку сразу при старте, если есть источник
+        if (musicSource != null)
+        {
+            musicSource.volume = Config.MusicVolume;
+            musicSource.loop = true;
+            if (!musicSource.isPlaying) musicSource.Play();
+        }
     }
 
     // Метод вызывается при каждом движении ползунка
@@ -36,6 +63,7 @@ public class VolumeSettings : MonoBehaviour
 
         // Опционально: сохраняем сразу, чтобы при перезагрузке звук остался прежним
         PlayerPrefs.SetFloat("MasterVolume", value);
+        SaveManager.SaveGame();
     }
 
     public void PlayPreview()
@@ -53,6 +81,30 @@ public class VolumeSettings : MonoBehaviour
             // Переводим 0..1 в 0..100%
             int percent = Mathf.RoundToInt(value * 100);
             volumeText.text = $"Громкость: {percent}%";
+        }
+    }
+
+    // --- Музыка ---
+    // Метод для музыки
+    public void OnMusicChanged(float value)
+    {
+        Config.MusicVolume = value;
+        UpdateMusicText(value);
+        PlayerPrefs.SetFloat("MusicVolume", value);
+
+        if (musicSource != null)
+        {
+            musicSource.volume = value;
+        }
+        SaveManager.SaveGame();
+    }
+
+    private void UpdateMusicText(float value)
+    {
+        if (musicText != null)
+        {
+            int percent = Mathf.RoundToInt(value * 100);
+            musicText.text = $"Музыка: {percent}%";
         }
     }
 }

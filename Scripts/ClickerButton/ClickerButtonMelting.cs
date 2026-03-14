@@ -24,24 +24,28 @@ public class ClickerButtonMelting : MonoBehaviour
         else strike = 0;
         lastClickPosition = currentClickPos;
 
-        BigInteger totalCost = Config.MeltingCost * Config.ClickCoinPower * Config.GlobalMultiplier;
+        // 1. Получаем базовую силу клика из формул
+        BigInteger clickPower = GameFormulas.GetTotalClickCoin();
 
+        // 2. Считаем, сколько меди нужно для ПОЛНОГО клика
+        BigInteger totalCost = clickPower * Config.MeltingCost;
+
+        // 3. Проверяем ресурсы
         if (Config.CopperCount >= totalCost)
         {
-            Config.CopperCoinCount += Config.ClickCoinPower * Config.GlobalMultiplier;
+            // Хватает на полный клик
+            Config.CopperCoinCount += clickPower;
             Config.CopperCount -= totalCost;
-
             SaveManager.SaveGame();
         }
-        
-        else if (Config.CopperCount >= Config.MeltingCost * Config.GlobalMultiplier)
+        else if (Config.CopperCount >= Config.MeltingCost)
         {
-            BigInteger possibleAmount = Config.CopperCount / Config.MeltingCost * Config.GlobalMultiplier;
-            Config.CopperCoinCount += possibleAmount;
-            Config.CopperCount -= possibleAmount * Config.MeltingCost * Config.GlobalMultiplier;
+            // Хватает только на часть клика (плавим сколько можем)
+            BigInteger possibleAmount = Config.CopperCount / Config.MeltingCost;
 
+            Config.CopperCoinCount += possibleAmount;
+            Config.CopperCount -= possibleAmount * Config.MeltingCost;
             SaveManager.SaveGame();
         }
-        
     }
 }

@@ -69,14 +69,40 @@ public static class Config
     public static float MultiClickRubPower = 1.2f;    // Множитель силы клика рублей 
     public const float growthRateRub = 1.09f;         // Множитель прибавки к силе клике за ур
 
-    // Перерождение
-    public static BigInteger prestigePrice = 100_000_000;     // Цена 1-го престижа
+    // ---- Перерождение ----
+
+    // Цена
+    public static BigInteger prestigePrice = 100_000_000;  // Цена 1-го престижа
     public const int prestigeMultiPrice = 100;        // Множитель цены престижа
+    // Количество
     public static int prestigeCount = 0;              // Количество перерождение
     public static BigInteger prestigePoints = 0;      // Количество очков перерождений
-    public static BigInteger prestigeAddPoints = 1;      // Количество очков перерождений
-    public static int prestigeAddMulti = 1;      // Бонус от перерождения к множителю      
-    public static int GlobalMultiplier = 1;      // Множитель от перерождений
+    public static BigInteger prestigeAddPoints = 1;   // Количество прибавляемых очков перерождений
+    // Глобальный множитель     
+    public static BigInteger GlobalMultiplier = 1;           // Множитель от перерождений
+    public const int prestigeAddMultiGlobal = 2;      // Бонус от перерождения к множителю 
+
+    // __Бонусы за улучшения__
+
+    // Очки перерождений
+    public static BigInteger prestigeMultiPoints = 1;
+    public static BigInteger prestigeAddMultiPoints = 2;
+    public static BigInteger prestigeMultiPointsPrice = 1;
+
+    // Шахты
+    public static BigInteger prestigeMultiMine = 1;
+    public static BigInteger prestigeAddMultiMine = 10;
+    public static BigInteger prestigeMultiMinePrice = 1;
+
+    // Плавильни
+    public static BigInteger prestigeMultiSmelter = 1;
+    public static BigInteger prestigeAddMultiSmelter = 10;
+    public static BigInteger prestigeMultiSmelterPrice = 1;
+
+    // Доход от монет
+    public static BigInteger prestigeMultiCoinIncome = 1;
+    public static BigInteger prestigeAddMultiCoinIncome = 10;
+    public static BigInteger prestigeMultiCoinIncomePrice = 1;
 
     // ----- Монеты -----
     // Количество
@@ -109,6 +135,10 @@ public static class Config
 
     // Громкость звука
     public static float MasterVolume = 0.5f;
+    public static float MusicVolume = 0.2f;
+
+    // Панель помощи
+    public static int IsFirstRun = 0;
 
     public static void ResetData()
     {
@@ -116,24 +146,29 @@ public static class Config
         CopperCount = 0;        // Количество медной руды
         CopperCoinCount = 0;    // Количество медных монет
         RubCount = 0;          // Количество рублей
+
         //CopperCount = 1000000000000000;        // Количество медной руды
         //CopperCoinCount = 1000000000000000;    // Количество медных монет
         //RubCount = 1000000000000000;          // Количество рублей
 
+        //CopperCount = 100000;        // Количество медной руды
+        //CopperCoinCount = 100000;    // Количество медных монет
+        //RubCount = 100000;          // Количество рублей
+
         // ----- Шахты -----
-        MineCount = 0;        // Купленных шахт
-        MinePower = 3;        // Сколько руды дает за цикл
-        MineTimer = 7.0f;     // За сколько добывает
+        MineCount = 0;            // Купленных шахт
+        MinePower = 3;            // Сколько руды дает за цикл
+        MineTimer = 7.0f;         // За сколько добывает
 
         // Цены шахт
-        MineBuyCost = 150;     // Цена шахты
-        MinePowerCost = 300;  // Цена улучшения сколько добывает за цикл
-        MineSpeedCost = 500;  // Цена улучшения скорости
+        MineBuyCost = 150;        // Цена шахты
+        MinePowerCost = 300;      // Цена улучшения сколько добывает за цикл
+        MineSpeedCost = 500;      // Цена улучшения скорости
 
         // Множитель улучшений шахт
-        MultiMineBuy = 1.2f;     // Рост цены покупки
-        MultiMinePower = 1.2f;   // Рост цены силы
-        MultiMineSpeed = 1.4f;   // Рост цены скорости
+        MultiMineBuy = 1.2f;      // Рост цены покупки
+        MultiMinePower = 1.2f;    // Рост цены силы
+        MultiMineSpeed = 1.4f;    // Рост цены скорости
 
         // ----- Плавильни -----
         SmelterCount = 0;         // Купленных плавилен
@@ -163,17 +198,25 @@ public static class Config
         MultiClickCoin = 1.2f;      // Множитель цены клика монет
         MultiClickCoinPower = 1.3f; // Множитель силы клика монет
 
-        lvlClickRub = 1;           // Ур улучшения клика рублей
-        ClickRubPower = 1;         // Сила клика рублей
-        CostClickRub = 20;        // Цена апа клика рублей
-        MultiClickRub = 1.2f;      // Множитель цены клика рублей 
-        MultiClickRubPower = 1.3f; // Множитель силы клика рублей 
+        lvlClickRub = 1;            // Ур улучшения клика рублей
+        ClickRubPower = 1;          // Сила клика рублей
+        CostClickRub = 20;          // Цена апа клика рублей
+        MultiClickRub = 1.2f;       // Множитель цены клика рублей 
+        MultiClickRubPower = 1.3f;  // Множитель силы клика рублей 
 
         // Перерождение
-        prestigePrice = 100_000_000;     // Цена 1-го престижа
-        prestigeCount = 0;         // Количество перерождение
-        prestigePoints = 0;        // Количество очков перерождений
-        GlobalMultiplier = 1;   // Множитель от перерождений
+        prestigePrice = 100_000_000;    // Цена 1-го престижа
+        prestigeCount = 0;              // Количество перерождение
+        prestigePoints = 0;             // Количество очков перерождений
+        GlobalMultiplier = 1;           // Множитель от перерождений
+        prestigeMultiPoints = 1;        // Множитель получаемых очков престижа
+        prestigeMultiPointsPrice = 1;
+        prestigeMultiMine = 1;          // Множитель шахт
+        prestigeMultiMinePrice = 1;
+        prestigeMultiSmelter = 1;        // Множитель плавилен
+        prestigeMultiSmelterPrice = 1;
+        prestigeMultiCoinIncome = 1;    // Множитель дохода от монет
+        prestigeMultiCoinIncomePrice = 1;
 
         // ----- Монеты -----
         coinOlovoCount = 0;     // Олово
@@ -189,7 +232,10 @@ public static class Config
 
         // Громкость звука
         MasterVolume = 0.5f;
+        MusicVolume = 0.2f;
 
+        // Панель помощи
+        IsFirstRun = 0;
 
 }
 }

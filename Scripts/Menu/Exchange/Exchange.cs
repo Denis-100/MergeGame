@@ -1,19 +1,19 @@
 using UnityEngine;
-using System;
 using System.Numerics;
 
 public class Exchange : MonoBehaviour
 {
-    // Метод для обмена 10 монет текущего типа на 1 монету следующего типа
-    // index: 0 - Олово, 1 - Бронза, 2 - Железо и т.д.
+    // Метод для обмена монет текущего типа на 1 монету следующего типа
     public void ExchangeOne(int index)
     {
-        // Проверяем, хватает ли монет и денег на операцию
-        if (GetCoinCount(index) >= Config.coinRate && Config.RubCount >= GetExchangeCost(index))
+        BigInteger unitCost = GameFormulas.GetExchangeMoneyCost(index + 1);
+
+        // Проверяем, хватает ли монет и денег
+        if (GetCoinCount(index) >= Config.coinRate && Config.RubCount >= unitCost)
         {
-            Config.RubCount -= GetExchangeCost(index);
-            ChangeCoinCount(index, -Config.coinRate);     // Забираем 10 штук
-            ChangeCoinCount(index + 1, 1);                // Даем 1 штуку (следующий тир)
+            Config.RubCount -= unitCost;
+            ChangeCoinCount(index, -Config.coinRate);     // Забираем 10 (или coinRate) штук
+            ChangeCoinCount(index + 1, 1);                // Даем 1 штуку следующего тира
             SaveManager.SaveGame();
         }
     }
@@ -21,20 +21,15 @@ public class Exchange : MonoBehaviour
     // Метод для обмена максимально возможного количества
     public void ExchangeMax(int index)
     {
-        BigInteger availableCoins = GetCoinCount(index);
-        BigInteger possibleByCoins = availableCoins / Config.coinRate;
+        BigInteger unitCost = GameFormulas.GetExchangeMoneyCost(index + 1);
 
-        if (possibleByCoins <= 0) return;
-
-        BigInteger finalExchanges = possibleByCoins;
-        BigInteger unitCost = GetExchangeCost(index);
-
-        // Если обмен платный, проверяем лимит по рублям
-        if (unitCost > 0)
-        {
-            BigInteger affordableByMoney = Config.RubCount / unitCost;
-            if (affordableByMoney < finalExchanges) finalExchanges = affordableByMoney;
-        }
+        // Используем общую формулу расчета максимального кол-ва
+        BigInteger finalExchanges = GameFormulas.CalculateMaxExchange(
+            GetCoinCount(index),
+            Config.RubCount,
+            Config.coinRate,
+            unitCost
+        );
 
         if (finalExchanges > 0)
         {
@@ -45,15 +40,7 @@ public class Exchange : MonoBehaviour
         }
     }
 
-    // Вспомогательный метод расчета цены обмена
-    private BigInteger GetExchangeCost(int index)
-    {
-        if (index == 0) return Config.CoinExchangeCost * 5;
-        // Используем BigInteger.Pow для точных расчетов больших цен
-        return Config.CoinExchangeCost * BigInteger.Pow(index, 5) * 5;
-    }
-
-    // Вспомогательный метод получения количества монет по индексу
+    // Вспомогательный метод получения количества монет по индексу (используется для расчетов)
     private BigInteger GetCoinCount(int index)
     {
         return index switch

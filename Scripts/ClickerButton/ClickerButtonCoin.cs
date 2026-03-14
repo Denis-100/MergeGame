@@ -22,7 +22,7 @@ public class ClickerButtonCoin : MonoBehaviour
         else strike = 0;
         lastClickPosition = currentClickPos;
 
-        Config.RubCount += Config.ClickRubPower * Config.GlobalMultiplier;
+        Config.RubCount += GameFormulas.GetTotalClickRub();
         SaveManager.SaveGame();
     }
 }

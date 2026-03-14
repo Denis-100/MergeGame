@@ -6,128 +6,128 @@ public class ProductionManager : MonoBehaviour
 {
     [HideInInspector] public float mineTimer = 0;
     [HideInInspector] public float smelterTimer = 0;
-    [HideInInspector] public float coinIncomeTimer = 0; // Таймер дохода от монет
+    [HideInInspector] public float coinIncomeTimer = 0;
+    public float coinIncomeInterval = 1.0f;
 
-    public float coinIncomeInterval = 1.0f; // Раз во сколько секунд монеты дают рубли
+    private float autoSaveTimer = 0f;
 
-    void Start()
-    {
-        CalculateOfflineProgress();
-    }
+    void Start() => CalculateOfflineProgress();
 
     void Update()
     {
         HandleMining();
         HandleSmelting();
-        HandleCoinIncome(); // Вызов дохода от монет
+        HandleCoinIncome();
+        HandleAutoSave();
     }
 
-    // Подсчет добычи меди с шахт
     void HandleMining()
     {
         if (Config.MineCount <= 0) return;
-
         mineTimer += Time.deltaTime;
         if (mineTimer >= Config.MineTimer)
         {
-            Config.CopperCount += Config.MineCount * Config.MinePower * (BigInteger)Config.GlobalMultiplier;
+            Config.CopperCount += GameFormulas.GetMiningOutput();
             mineTimer = 0;
         }
     }
 
-    // Подсчет дохода плавилен
     void HandleSmelting()
     {
         if (Config.SmelterCount <= 0) return;
-
         smelterTimer += Time.deltaTime;
+
         if (smelterTimer >= Config.SmelterTimer)
         {
-            BigInteger totalCost = (BigInteger)(Config.SmelterCount * Config.SmelterPower * Config.MeltingCost * (BigInteger)Config.GlobalMultiplier);
-            if (Config.CopperCount >= totalCost)
+            // Сколько печка должна потребить за один цикл (базовое значение)
+            BigInteger targetConsumption = GameFormulas.GetSmelterConsumption();
+
+            if (Config.CopperCount >= targetConsumption)
             {
-                Config.CopperCount -= totalCost;
-                Config.CopperCoinCount += Config.SmelterCount * Config.SmelterPower * (BigInteger)Config.GlobalMultiplier;
+                // Случай 1: Ресурсов достаточно для полной работы
+                Config.CopperCount -= targetConsumption;
+                Config.CopperCoinCount += GameFormulas.GetSmelterOutput();
             }
+            else if (Config.CopperCount > 0)
+            {
+                // Случай 2: Ресурсов мало, плавим «на остатки»
+                // Вычисляем, сколько единиц продукции (монет) получится из имеющейся меди
+                // Для этого делим текущую медь на стоимость производства одной единицы
+
+                // Сначала найдем цену 1 монеты в меди:
+                BigInteger costPerOneCoin = targetConsumption / GameFormulas.GetSmelterOutput();
+
+                if (costPerOneCoin > 0)
+                {
+                    BigInteger possibleOutput = Config.CopperCount / costPerOneCoin;
+
+                    if (possibleOutput > 0)
+                    {
+                        Config.CopperCount -= possibleOutput * costPerOneCoin;
+                        Config.CopperCoinCount += possibleOutput;
+                    }
+                }
+            }
+
             smelterTimer = 0;
+            // Можно добавить SaveManager.SaveGame() здесь, если нужно сохранять прогресс печки
         }
     }
 
-    // Подсчет пассивного дохода от ценных монет в рубли
     void HandleCoinIncome()
     {
         coinIncomeTimer += Time.deltaTime;
         if (coinIncomeTimer >= coinIncomeInterval)
         {
-            Config.RubCount += GetTotalCoinIncome() * (BigInteger)Config.GlobalMultiplier;
+            Config.RubCount += GetTotalCoinIncome() * (BigInteger)Config.GlobalMultiplier * Config.prestigeMultiCoinIncome;
             coinIncomeTimer = 0;
         }
     }
 
-    // Функция для получения суммарного дохода от всех типов монет
     public BigInteger GetTotalCoinIncome()
     {
-        BigInteger total = 0;
-        total += Config.coinOlovoCount * Config.coinOlovoIncome;
-        total += Config.coinBronzaCount * Config.coinBronzaIncome;
-        total += Config.coinIronCount * Config.coinIronIncome;
-        total += Config.coinSilverCount * Config.coinSilverIncome;
-        total += Config.coinGoldCount * Config.coinGoldIncome;
-        total += Config.coinTitanCount * Config.coinTitanIncome;
-        total += Config.coinDiamondCount * Config.coinDiamondIncome;
-        total += Config.coinObsidianCount * Config.coinObsidianIncome;
-        total += Config.coinRybinCount * Config.coinRybinIncome;
-        total += Config.coinSingularCount * Config.coinSingularIncome;
-        return total;
+        return Config.coinOlovoCount * Config.coinOlovoIncome + Config.coinBronzaCount * Config.coinBronzaIncome +
+               Config.coinIronCount * Config.coinIronIncome + Config.coinSilverCount * Config.coinSilverIncome +
+               Config.coinGoldCount * Config.coinGoldIncome + Config.coinTitanCount * Config.coinTitanIncome +
+               Config.coinDiamondCount * Config.coinDiamondIncome + Config.coinObsidianCount * Config.coinObsidianIncome +
+               Config.coinRybinCount * Config.coinRybinIncome + Config.coinSingularCount * Config.coinSingularIncome;
     }
 
-    // Подсчет офлайн прогресса
     void CalculateOfflineProgress()
     {
         if (!PlayerPrefs.HasKey(SaveManager.LastSaveTimeKey)) return;
-
         long temp = Convert.ToInt64(PlayerPrefs.GetString(SaveManager.LastSaveTimeKey));
         DateTime lastTime = DateTime.FromBinary(temp);
-        TimeSpan difference = DateTime.Now - lastTime;
-        float secondsOffline = (float)difference.TotalSeconds;
+        float secondsOffline = (float)(DateTime.Now - lastTime).TotalSeconds;
 
-        if (secondsOffline < 10) return; // Меньше 10 секунд не считаем
+        if (secondsOffline < 10) return;
 
         // Шахты
-        if (Config.MineCount > 0)
-        {
-            BigInteger cycles = (BigInteger)(secondsOffline / Config.MineTimer);
-            BigInteger offlineCopper = cycles * Config.MineCount * Config.MinePower * (BigInteger)Config.GlobalMultiplier;
-            Config.CopperCount += offlineCopper;
-            Debug.Log($"Офлайн: шахты принесли {Formatter.FormatValue(offlineCopper)} руды");
-        }
+        BigInteger mineCycles = (BigInteger)(secondsOffline / Config.MineTimer);
+        Config.CopperCount += mineCycles * GameFormulas.GetMiningOutput();
 
         // Плавильни
-        if (Config.SmelterCount > 0)
-        {
-            BigInteger cycles = (BigInteger)(secondsOffline / Config.SmelterTimer);
-            BigInteger costPerCycle = (BigInteger)(Config.SmelterCount * Config.MeltingCost);
-            BigInteger possibleCycles = Config.CopperCount / costPerCycle;
-            BigInteger finalCycles = (cycles < possibleCycles) ? cycles : possibleCycles;
+        BigInteger smelterCycles = (BigInteger)(secondsOffline / Config.SmelterTimer);
+        BigInteger costPerCycle = GameFormulas.GetSmelterConsumption();
+        BigInteger finalSmelterCycles = (costPerCycle > 0) ? BigInteger.Min(smelterCycles, Config.CopperCount / costPerCycle) : 0;
+        Config.CopperCount -= finalSmelterCycles * costPerCycle;
+        Config.CopperCoinCount += finalSmelterCycles * GameFormulas.GetSmelterOutput();
 
-            Config.CopperCount -= finalCycles * costPerCycle;
-            Config.CopperCoinCount += finalCycles * Config.SmelterCount * Config.SmelterPower * (BigInteger)Config.GlobalMultiplier;
-            Debug.Log($"Офлайн: плавильни сработали {finalCycles} раз");
-        }
-
-        // Пассивный доход от монет за офлайн
-        BigInteger coinCycles = (BigInteger)(secondsOffline / coinIncomeInterval);
-        if (coinCycles > 0)
-        {
-            Config.RubCount += GetTotalCoinIncome() * coinCycles * (BigInteger)Config.GlobalMultiplier;
-            Debug.Log($"Офлайн: монеты принесли доход за {coinCycles} циклов");
-        }
+        // Доход
+        BigInteger incomeCycles = (BigInteger)(secondsOffline / coinIncomeInterval);
+        Config.RubCount += GetTotalCoinIncome() * incomeCycles * (BigInteger)Config.GlobalMultiplier;
 
         SaveManager.SaveGame();
     }
 
-    private void OnApplicationPause(bool pause)
+    private void HandleAutoSave()
     {
-        if (pause) SaveManager.SaveGame();
+        autoSaveTimer += Time.deltaTime;
+        if (autoSaveTimer > 30)
+        {
+            SaveManager.SaveGame();
+            autoSaveTimer = 0;
+        }
     }
+    private void OnApplicationPause(bool pause) { if (pause) SaveManager.SaveGame(); }
 }
