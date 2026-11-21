@@ -18,6 +18,16 @@
 - Сохранение игры и доход за время отсутствия.
 - Настройки звука.
 
+## 📸 Скриншоты игры
+
+| Главный экран | Улучшения | Обмен монет |
+| :---: | :---: | :---: |
+| <img src="screenshots/main.webp" alt="Главный экран MergeGame" width="220"> | <img src="screenshots/upgrades.webp" alt="Улучшения шахт и плавилен" width="220"> | <img src="screenshots/exchange.webp" alt="Обмен монет" width="220"> |
+
+| Перерождение | Настройки | Обучение |
+| :---: | :---: | :---: |
+| <img src="screenshots/prestige.webp" alt="Система престижа" width="220"> | <img src="screenshots/settings.webp" alt="Настройки звука" width="220"> | <img src="screenshots/tutorial.webp" alt="Окно обучения" width="220"> |
+
 ## Технологии
 
 **Unity · C# · Android**
