@@ -24,7 +24,9 @@
 
 ## Android-версия
 
-`MergeGame.apk` — последняя собранная мной версия игры для Android.
+Последняя собранная версия игры для Android.
+
+[📥 Скачать MergeGame.apk](https://disk.yandex.ru/d/O4eKQRlhi1dbXQ)
 
 ## Исходный код
 
